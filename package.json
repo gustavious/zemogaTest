@@ -2,6 +2,7 @@
   "name": "zemoga-nodejs",
   "version": "1.0.0",
   "description": "Basic node auth app using JWT",
+  "repository": "github:gustavious/zemogaTest",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -20,13 +21,17 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "flow-bin": "0.69.0",
+    "morgan": "^1.8.2",
     "nodemon": "^1.18.4"
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",
+    "body-parser": "latest",
     "es6-error": "4.0.2",
     "express": "^4.16.4",
     "express-jwt": "^5.3.1",
-    "body-parser": "latest"
+    "mongoose": "^4.8.6",
+    "winston": "^2.3.1",
+    "winston-daily-rotate-file": "^1.4.6"
   }
 }
