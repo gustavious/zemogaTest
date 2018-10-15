@@ -1,7 +1,5 @@
 /* @flow */
-import express, {
-  type $Request as ExpressRequest,
-} from 'express';
+import express from 'express';
 import bodyParser from 'body-parser';
 import Router from './routes';
 

@@ -1,9 +1,15 @@
 import {
-  getUser,
   createUser,
+  login,
+  getAllUsers,
+  getUser,
+  updateUser,
 } from './userController';
 
 export {
-  getUser,
   createUser,
+  login,
+  getAllUsers,
+  getUser,
+  updateUser,
 }
