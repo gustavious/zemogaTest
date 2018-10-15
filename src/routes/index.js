@@ -6,7 +6,7 @@ import {
   updateUser,
 } from "../controllers";
 
-export default function(app) {
+export default async (app) => {
   // Create a user
   app.post('/signup', createUser);
   // Log in a user
