@@ -2,6 +2,7 @@
 .env*
 .jest-cache-docker/**
 .jest-cache/**
+.log/**
 node_modules/**
 test-output/**
 test-output/eslint.xml

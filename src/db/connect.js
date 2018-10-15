@@ -1,4 +1,6 @@
 import Mongoose from 'mongoose';
+import config from '../core/config'
+import logger from '../core/logger'
 
 Mongoose.Promise = global.Promise;
 
