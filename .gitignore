@@ -1,0 +1,14 @@
+.*-env
+.env*
+.jest-cache-docker/**
+.jest-cache/**
+node_modules/**
+test-output/**
+test-output/eslint.xml
+test-output/jest.xml
+
+# Mac OSX
+.DS_Store
+
+# IDEA
+.idea
