@@ -17,8 +17,8 @@ VoteModel.getAll = () => {
   return VoteModel.find({});
 };
 
-VoteModel.getVotesByUserId = (username, password) => {
-  return VoteModel.findOne({username, password});
+VoteModel.getVotesByUserId = (user_id,) => {
+  return VoteModel.find({user_id});
 };
 
 VoteModel.addVote = (user) => {

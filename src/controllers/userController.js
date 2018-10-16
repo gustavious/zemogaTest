@@ -48,6 +48,7 @@ export const login = async (req, res) => {
     if (user == null) {
       res.status(500)
         .send({error: `User not found or wrong credentials: ${req.body.username}`});
+      return;
     }
     logger.info('Fetching user...');
     res.status(200)
@@ -66,10 +67,6 @@ export const login = async (req, res) => {
 export const getUser = async (req, res) => {
   try {
     const user = await User.getUserById(req.params.id);
-    if (user == null) {
-      res.status(500)
-        .send({error: `User id not found: ${req.params.id}`});
-    }
     logger.info('Fetching user...');
     res.status(200)
       .send({
@@ -104,6 +101,7 @@ export const updateUser = async (req, res) => {
     if (user == null) {
       res.status(500)
         .send({error: `User not found: ${req.body.username}`});
+      return;
     }
     logger.info('Updating user...');
     res.status(200).send(user);
@@ -120,6 +118,7 @@ export const removeUser = async (req, res) => {
     if (removedUser.n === 0) {
       res.status(500)
         .send({error: `User not found: ${req.body.username}`});
+      return;
     }
     logger.info('Deleted user: ' + removedUser);
     res.status(202).send({

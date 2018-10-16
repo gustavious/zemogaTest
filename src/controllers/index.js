@@ -7,6 +7,13 @@ import {
   removeUser,
 } from './userController';
 
+import {
+  getAllVotes,
+  getVotesByUser,
+  addVote,
+} from './voteController';
+
+
 export {
   createUser,
   login,
@@ -14,4 +21,7 @@ export {
   getUser,
   updateUser,
   removeUser,
+  getAllVotes,
+  getVotesByUser,
+  addVote,
 }

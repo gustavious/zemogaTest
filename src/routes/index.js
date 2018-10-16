@@ -23,6 +23,8 @@ export default async (app) => {
     // Remove an user
     .delete(removeUser);
 
+  // Get all votes
+
   app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../UI/index.html'));
   });
