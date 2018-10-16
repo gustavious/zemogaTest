@@ -78,6 +78,9 @@ Example:
 ```
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoIjp7Il9pZCI6IjViYzU5MGUyYWVjNmYxNWU0ZTc1NDljNSIsInVzZXJuYW1lIjoiMTgiLCJwYXNzd29yZCI6IiQyYiQxMCQxY0dDTW8vdFNRSTlhRFd3WVhsb3YuWVBKbkptQUdycDJwYXJ2eHNYUXZ5Z3Q4ZjF6cDVSVyIsImFnZSI6MjEsIm1hcnJpYWdlX3N0YXR1cyI6IkNhc2FkaXNpbW8iLCJfX3YiOjB9LCJpYXQiOjE1Mzk2NzQzODh9.wBfWGDnbdo69RW-gAT_1kkXZc_KzzZQym7oc7mr7P7U
 ```
+POST:
+  - Add a new vote => `/vote`
+    required fields: user_id, box_id, box_id
 
 GET:
   - Get all users => `/users`
@@ -91,7 +94,8 @@ PUT:
     optional fields: password, age, marriage_status
 
 DELETE:
-    - Remove an user => `/users/:id`
+
+   - Remove an user => `/users/:id`
 
 
 ### Running tests

@@ -1,16 +1,22 @@
 import {VoteModel as Vote, UserModel as User} from '../models'
 import logger from '../core/logger'
+import VoteModel from "../models/voteModel";
 
 
 export const addVote = async (req, res) => {
   if (!req.body.user_id || !req.body.box_id || !req.body.vote) {
     res.status(500)
-      .send({error: 'Missing params', required: 'user_id, password, age, marriage_status'});
+      .send({error: 'Missing params', required: 'user_id, box_id, vote < UP | DOWN >'});
     return;
   }
   if (req.body.vote !== 'UP' && req.body.vote !== 'DOWN') {
     res.status(500)
       .send({error: 'Wrong vote value', valid_values: 'UP, DOWN'});
+    return;
+  }
+  if (await Vote.countBoxVotesByUserId(req.body.user_id, req.body.box_id) >= 3){
+    res.status(500)
+      .send({error: 'Max number of votes per box reached', box_id: req.body.box_id, user_id: req.body.user_id});
     return;
   }
   const vote = new Vote({
