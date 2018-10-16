@@ -14,6 +14,13 @@ export const addVote = async (req, res) => {
       .send({error: 'Wrong vote value', valid_values: 'UP, DOWN'});
     return;
   }
+  try {
+    await User.getUserById(req.body.user_id);
+  } catch (e) {
+    res.status(500)
+      .send({error: `User id not found: ${req.body.user_id}`});
+    return;
+  }
   if (await Vote.countBoxVotesByUserId(req.body.user_id, req.body.box_id) >= 3){
     res.status(500)
       .send({error: 'Max number of votes per box reached', box_id: req.body.box_id, user_id: req.body.user_id});
@@ -42,13 +49,14 @@ export const addVote = async (req, res) => {
 };
 
 export const getVotesByUser = async (req, res) => {
-  try {
-    const user = await User.getUserById(req.params.id);
-    if (user == null) {
+    try {
+      await User.getUserById(req.body.user_id);
+    } catch (e) {
       res.status(500)
-        .send({error: `User id not found: ${req.params.id}`});
+        .send({error: `User id not found: ${req.body.user_id}`});
       return;
     }
+  try {
     logger.info('Fetching user votes...');
     const votes = Vote.getVotesByUserId(req.params.id);
     res.status(200)

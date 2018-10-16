@@ -33,7 +33,7 @@ async app => {
   app.get('/votes', _controllers.getAllVotes);
   // Get the votes that belong to a specific user
   app.route('/users/:id/votes').
-  get((0, _controllers.getVotesByUser)());
+  get(_controllers.getVotesByUser);
 
   app.get('/', function (req, res) {
     res.sendFile(_path2.default.join(__dirname, '../UI/index.html'));

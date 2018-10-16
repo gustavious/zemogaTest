@@ -1,16 +1,22 @@
 'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.getAllVotes = exports.getVotesByUser = exports.addVote = undefined;var _models = require('../models');
-var _logger = require('../core/logger');var _logger2 = _interopRequireDefault(_logger);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _logger = require('../core/logger');var _logger2 = _interopRequireDefault(_logger);
+var _voteModel = require('../models/voteModel');var _voteModel2 = _interopRequireDefault(_voteModel);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 
 const addVote = exports.addVote = async (req, res) => {
   if (!req.body.user_id || !req.body.box_id || !req.body.vote) {
     res.status(500).
-    send({ error: 'Missing params', required: 'user_id, password, age, marriage_status' });
+    send({ error: 'Missing params', required: 'user_id, box_id, vote < UP | DOWN >' });
     return;
   }
   if (req.body.vote !== 'UP' && req.body.vote !== 'DOWN') {
     res.status(500).
     send({ error: 'Wrong vote value', valid_values: 'UP, DOWN' });
+    return;
+  }
+  if ((await _models.VoteModel.countBoxVotesByUserId(req.body.user_id, req.body.box_id)) >= 3) {
+    res.status(500).
+    send({ error: 'Max number of votes per box reached', box_id: req.body.box_id, user_id: req.body.user_id });
     return;
   }
   const vote = new _models.VoteModel({
