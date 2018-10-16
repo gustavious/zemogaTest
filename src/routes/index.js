@@ -5,6 +5,9 @@ import {
   getUser,
   updateUser,
   removeUser,
+  addVote,
+  getAllVotes,
+  getVotesByUser,
 } from "../controllers";
 import path from 'path';
 
@@ -12,9 +15,10 @@ export default async (app) => {
   // Create a user
   app.post('/signup', createUser);
   // Log in a user
-  app.post('/login', await login);
+  app.post('/login', login);
   // Get all stored users
   app.get('/users', getAllUsers);
+
   app.route('/users/:id')
     // Get a specific user
     .get(getUser)
@@ -23,7 +27,13 @@ export default async (app) => {
     // Remove an user
     .delete(removeUser);
 
+  // Add a new vote
+  app.post('/vote', addVote);
   // Get all votes
+  app.get('/votes', getAllVotes);
+  // Get the votes that belong to a specific user
+  app.route('/users/:id/votes')
+    .get(getVotesByUser());
 
   app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../UI/index.html'));
