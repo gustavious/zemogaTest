@@ -14,6 +14,13 @@ const addVote = exports.addVote = async (req, res) => {
     send({ error: 'Wrong vote value', valid_values: 'UP, DOWN' });
     return;
   }
+  try {
+    await _models.UserModel.getUserById(req.body.user_id);
+  } catch (e) {
+    res.status(500).
+    send({ error: `User id not found: ${req.body.user_id}` });
+    return;
+  }
   if ((await _models.VoteModel.countBoxVotesByUserId(req.body.user_id, req.body.box_id)) >= 3) {
     res.status(500).
     send({ error: 'Max number of votes per box reached', box_id: req.body.box_id, user_id: req.body.user_id });
@@ -43,12 +50,13 @@ const addVote = exports.addVote = async (req, res) => {
 
 const getVotesByUser = exports.getVotesByUser = async (req, res) => {
   try {
-    const user = await _models.UserModel.getUserById(req.params.id);
-    if (user == null) {
-      res.status(500).
-      send({ error: `User id not found: ${req.params.id}` });
-      return;
-    }
+    await _models.UserModel.getUserById(req.body.user_id);
+  } catch (e) {
+    res.status(500).
+    send({ error: `User id not found: ${req.body.user_id}` });
+    return;
+  }
+  try {
     _logger2.default.info('Fetching user votes...');
     const votes = _models.VoteModel.getVotesByUserId(req.params.id);
     res.status(200).
