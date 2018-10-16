@@ -5,15 +5,16 @@
   "repository": "github:gustavious/zemogaTest",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "babel-node ./src/index.js",
     "watch": "nodemon ./src/index.js --exec babel-node",
     "build": "babel src -d dist",
-    "serve": "node dist/index.js"
+    "serve": "node dist/index.js",
+    "test": "mocha --compilers js:babel-register"
   },
   "author": "Gustavo Alegria",
   "license": "MIT",
   "devDependencies": {
+    "autoquit": "^0.1.6",
     "babel-cli": "^6.26.0",
     "babel-plugin-syntax-class-properties": "^6.13.0",
     "babel-plugin-syntax-flow": "^6.18.0",
@@ -22,9 +23,12 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
     "flow-bin": "0.69.0",
+    "mocha": "^5.2.0",
     "morgan": "^1.8.2",
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.18.4",
+    "request": "latest"
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",
@@ -36,6 +40,6 @@
     "winston": "^2.3.1",
     "winston-daily-rotate-file": "^1.4.6",
     "jsonwebtoken": "^8.1.0",
-    "bcrypt": "latest"
+    "bcrypt": "^1.0.3"
   }
 }

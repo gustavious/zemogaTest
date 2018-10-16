@@ -7,6 +7,7 @@ import morgan from 'morgan'
 import connectToDb from './db/connect'
 import logger from './core/logger'
 import {authMiddleware} from './core/auth'
+import * as autoQuit from 'autoquit'
 
 const server = express(),
   port = config.serverPort;
@@ -34,6 +35,7 @@ server.use((error: Error, req: Request, res, next) => {
 });
 Router(server);
 
+server.autoQuit;
 server.listen(port, () => {
   logger.info(`Server running at http://127.0.0.1:${port}/
       You can see endpoints listed in /`);
