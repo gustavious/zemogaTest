@@ -19,7 +19,7 @@ UserModel.getAll = () => {
 };
 
 UserModel.getUser = (username, password) => {
-  return UserModel.find({username, password});
+  return UserModel.findOne({username, password});
 };
 
 UserModel.getUserById = (id) => {

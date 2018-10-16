@@ -4,6 +4,11 @@ import jwt from 'jsonwebtoken';
 
 
 export const createUser = async (req, res) => {
+  if (!req.body.username || !req.body.password || !req.body.age || !req.body.marriage_status) {
+    res.status(500)
+      .send({error: 'Missing params', required: 'username, password, age, marriage_status'});
+    return;
+  }
   const user = new User({
     username: req.body.username,
     password: req.body.password,
@@ -29,8 +34,17 @@ export const createUser = async (req, res) => {
 };
 
 export const login = async (req, res) => {
+  if (!req.body.username || !req.body.password) {
+    res.status(500)
+      .send({error: 'Missing params', required: 'username, password'});
+    return;
+  }
   try {
     const user = await User.getUser(req.body.username, req.body.password);
+    if (user == null) {
+      res.status(500)
+        .send({error: `User not found or wrong credentials: ${req.body.username}`});
+    }
     logger.info('Fetching user...');
     res.status(200)
       .send({
@@ -48,6 +62,10 @@ export const login = async (req, res) => {
 export const getUser = async (req, res) => {
   try {
     const user = await User.getUserById(req.params.id);
+    if (user == null) {
+      res.status(500)
+        .send({error: `User id not found: ${req.params.id}`});
+    }
     logger.info('Fetching user...');
     res.status(200)
       .send({
@@ -75,9 +93,13 @@ export const getAllUsers = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    const users = await User.updateUser(req.params.id, req.body);
+    const user = await User.updateUser(req.params.id, req.body);
+    if (user == null) {
+      res.status(500)
+        .send({error: `User not found: ${req.body.username}`});
+    }
     logger.info('Updating user...');
-    res.status(200).send(users);
+    res.status(200).send(user);
   }
   catch(err) {
     logger.error('Error in getting all users: ' + err);
@@ -88,6 +110,10 @@ export const updateUser = async (req, res) => {
 export const removeUser = async (req, res) => {
   try{
     const removedUser = await User.removeUser(req.params.id);
+    if (removedUser.n === 0) {
+      res.status(500)
+        .send({error: `User not found: ${req.body.username}`});
+    }
     logger.info('Deleted user: ' + removedUser);
     res.status(202).send({
       message: 'User successfully deleted',

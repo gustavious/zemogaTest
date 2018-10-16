@@ -6,7 +6,6 @@ export const authMiddleware = jwt({
   requestProperty: 'auth',
   getToken: req => {
     const authHeader: ?string = req.header('Authorization');
-    logger.info(authHeader.split(' ')[1]);
     if (authHeader != null && authHeader.split(' ')[0].toLowerCase() === 'bearer') {
       return authHeader.split(' ')[1];
     } else if (req.query && req.query.token) {
