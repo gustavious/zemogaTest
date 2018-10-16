@@ -47,7 +47,12 @@ export const login = async (req, res) => {
     );
     if (user == null) {
       res.status(500)
-        .send({error: `User not found or wrong credentials: ${req.body.username}`});
+        .send({error: `User not found: ${req.body.username}`});
+      return;
+    }
+    if (!bcrypt.compareSync(req.body.password, user.password)){
+      res.status(500)
+        .send({error: `Wrong password for user: ${req.body.username}`});
       return;
     }
     logger.info('Fetching user...');
