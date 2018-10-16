@@ -109,7 +109,7 @@ $ npm test
 To run the eslint linter,
 
 ```shell
-$ npm lint
+$ yarn eslint src
 ```
 
 That's it!
