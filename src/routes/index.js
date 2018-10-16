@@ -4,18 +4,21 @@ import {
   getAllUsers,
   getUser,
   updateUser,
+  removeUser,
 } from "../controllers";
 
 export default async (app) => {
   // Create a user
   app.post('/signup', createUser);
   // Log in a user
-  app.post('/login', login);
+  app.post('/login', await login);
   // Get all stored users
   app.get('/users', getAllUsers);
   app.route('/users/:id')
     // Get a specific user
     .get(getUser)
-    // Update a user
-    .put(updateUser);
+    // Update an user
+    .put(updateUser)
+    // Remove an user
+    .delete(removeUser);
 }

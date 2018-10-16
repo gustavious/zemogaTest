@@ -28,11 +28,11 @@ export const createUser = async (req, res) => {
   }
 };
 
-export const login = async (res, req) => {
+export const login = async (req, res) => {
   try {
     const user = await User.getUser(req.body.username, req.body.password);
     logger.info('Fetching user...');
-    res.status(201)
+    res.status(200)
       .send({
         message: 'User successfully logged',
         user: user,
@@ -49,7 +49,7 @@ export const getUser = async (req, res) => {
   try {
     const user = await User.getUserById(req.params.id);
     logger.info('Fetching user...');
-    res.status(201)
+    res.status(200)
       .send({
         message: 'User found',
         user
@@ -64,14 +64,38 @@ export const getUser = async (req, res) => {
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.getAll();
-    logger.info('sending all users...');
-    res.status(201).send(users);
+    logger.info('Sending all users...');
+    res.status(200).send(users);
   }
   catch(err) {
     logger.error('Error in getting all users: ' + err);
-    res.status(500).send('Got error in getAll');
+    res.status(500).send({error: `Got error in getAll: ${err}`});
   }
 };
 
-export const updateUser = async (res, req) => {
+export const updateUser = async (req, res) => {
+  try {
+    const users = await User.updateUser(req.params.id, req.body);
+    logger.info('Updating user...');
+    res.status(200).send(users);
+  }
+  catch(err) {
+    logger.error('Error in getting all users: ' + err);
+    res.status(500).send({error: `Got error while updating user: ${err}`});
+  }
+};
+
+export const removeUser = async (req, res) => {
+  try{
+    const removedUser = await User.removeUser(req.params.id);
+    logger.info('Deleted user: ' + removedUser);
+    res.status(202).send({
+      message: 'User successfully deleted',
+      removedUser: removedUser,
+    });
+  }
+  catch(err) {
+    logger.error('Failed to delete user: ' + err);
+    res.status(500).send({error: `Got error while deleting user :( ${err}`});
+  }
 };

@@ -4,6 +4,7 @@ import {
   getAllUsers,
   getUser,
   updateUser,
+  removeUser,
 } from './userController';
 
 export {
@@ -12,4 +13,5 @@ export {
   getAllUsers,
   getUser,
   updateUser,
+  removeUser,
 }

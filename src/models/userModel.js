@@ -30,8 +30,12 @@ UserModel.addUser = (user) => {
   return user.save();
 };
 
-UserModel.removeUser = (username) => {
-  return UserModel.remove({username});
+UserModel.updateUser = (id, params) => {
+  return UserModel.findByIdAndUpdate(id, params);
+};
+
+UserModel.removeUser = (id) => {
+  return UserModel.remove({_id: id});
 };
 
 export default UserModel;
