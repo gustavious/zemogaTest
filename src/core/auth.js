@@ -13,4 +13,4 @@ export const authMiddleware = jwt({
     }
     return null;
   },
-}).unless({path: ['/favicon.ico','/signup', '/login']});
+}).unless({path: ['/favicon.ico','/signup', '/login', '/index', '/']});

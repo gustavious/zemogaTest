@@ -35,5 +35,6 @@ server.use((error: Error, req: Request, res, next) => {
 Router(server);
 
 server.listen(port, () => {
-  console.log(`Server running at http://127.0.0.1:${port}/`);
+  logger.info(`Server running at http://127.0.0.1:${port}/
+      You can see endpoints listed in /`);
 });

@@ -6,6 +6,7 @@ import {
   updateUser,
   removeUser,
 } from "../controllers";
+import path from 'path';
 
 export default async (app) => {
   // Create a user
@@ -21,4 +22,8 @@ export default async (app) => {
     .put(updateUser)
     // Remove an user
     .delete(removeUser);
+
+  app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, '../UI/index.html'));
+  });
 }
