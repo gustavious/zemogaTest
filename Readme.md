@@ -64,7 +64,7 @@ $ npm run watch
 
 ### API endpoints explained
 
-Most of the API endpoints require an `Authorization` header to work, the only two exception are `/login` and `/register/. You can get a token form here.
+Most of the API endpoints require an `Authorization` header to work, the only two exception are `/login` and `/register/`. You can get a token form here.
 
 POST:
   - Register a user => `/signup`
