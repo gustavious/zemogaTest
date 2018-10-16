@@ -1,6 +1,7 @@
 import {UserModel as User} from '../models'
 import logger from '../core/logger'
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt'
 
 
 export const createUser = async (req, res) => {
@@ -11,7 +12,7 @@ export const createUser = async (req, res) => {
   }
   const user = new User({
     username: req.body.username,
-    password: req.body.password,
+    password: bcrypt.hashSync(req.body.password, 10),
     age: req.body.age,
     marriage_status: req.body.marriage_status
   });
@@ -40,7 +41,10 @@ export const login = async (req, res) => {
     return;
   }
   try {
-    const user = await User.getUser(req.body.username, req.body.password);
+    const user = await User.getUser(
+      req.body.username,
+      bcrypt.hashSync(req.body.password, 10)
+    );
     if (user == null) {
       res.status(500)
         .send({error: `User not found or wrong credentials: ${req.body.username}`});
@@ -93,6 +97,9 @@ export const getAllUsers = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
+    if (req.body.password) {
+      req.body.password = bcrypt.hashSync(req.body.password, 10);
+    }
     const user = await User.updateUser(req.params.id, req.body);
     if (user == null) {
       res.status(500)
