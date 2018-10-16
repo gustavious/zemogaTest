@@ -1,6 +1,6 @@
 import {UserModel as User} from '../models'
 import logger from '../core/logger'
-import jwt from 'express-jwt';
+import jwt from 'jsonwebtoken';
 
 
 export const createUser = async (req, res) => {
@@ -18,21 +18,47 @@ export const createUser = async (req, res) => {
       .send({
         message: 'User registered',
         user: savedUser,
-        token: '12345' // TODO
+        token: await jwt.sign({ auth: savedUser }, 'zemoga-secret'),
       });
   }
   catch(err) {
-    logger.error('Error in getting users- ' + err);
+    logger.error('Error in creating users: ', err);
     res.status(500)
       .send({error: `Got error during user creation: ${err}`});
   }
-
 };
 
-export const login = (res, req) => {};
+export const login = async (res, req) => {
+  try {
+    const user = await User.getUser(req.body.username, req.body.password);
+    logger.info('Fetching user...');
+    res.status(201)
+      .send({
+        message: 'User successfully logged',
+        user: user,
+        token: await jwt.sign({ auth: user }, 'zemoga-secret'),
+      });
+  } catch(err) {
+    logger.error('Error in getting users: ', err);
+    res.status(500)
+      .send({error: `Got error during user login: ${err}`});
+  }
+};
 
-export const getUser = (req, res) => {
-  res.json("Hello world");
+export const getUser = async (req, res) => {
+  try {
+    const user = await User.getUserById(req.params.id);
+    logger.info('Fetching user...');
+    res.status(201)
+      .send({
+        message: 'User found',
+        user
+      });
+  } catch(err) {
+    logger.error('Error in getting users: ', err);
+    res.status(500)
+      .send({error: `Got error during user fetch: ${err}`});
+  }
 };
 
 export const getAllUsers = async (req, res) => {
@@ -47,4 +73,5 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
-export const updateUser = (res, req) => {};
+export const updateUser = async (res, req) => {
+};

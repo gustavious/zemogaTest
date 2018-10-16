@@ -18,8 +18,12 @@ UserModel.getAll = () => {
   return UserModel.find({});
 };
 
-UserModel.getUser = (username) => {
-  return UserModel.find({username});
+UserModel.getUser = (username, password) => {
+  return UserModel.find({username, password});
+};
+
+UserModel.getUserById = (id) => {
+  return UserModel.findById(id);
 };
 
 UserModel.addUser = (user) => {
