@@ -6,12 +6,10 @@ const advertisementSchema = mongoose.Schema({
   offer_msg: {
     type: String,
     required: [true, 'Required offer message'],
-    lowercase: true
   },
   offer_graphic_url: {
     type: mongoose.SchemaTypes.Url,
     required: [true, 'Required offer graphic url'],
-    lowercase: true
   },
   start_datetime: {
     type: Date,
@@ -24,6 +22,7 @@ const advertisementSchema = mongoose.Schema({
   category: {
     type: String,
     required: [true, 'Required category'],
+    uppercase: true,
   }
 }, {collection : 'Advertisement'});
 
@@ -42,12 +41,19 @@ AdvertisementModel.addAdvertisement = (adv) => {
 };
 
 AdvertisementModel.updateAdvertisementById = (id, params) => {
-  return AdvertisementModel.findByIdAndUpdate(id, params);
+  return AdvertisementModel.findByIdAndUpdate(id, params, {new: true});
 };
 
 AdvertisementModel.removeAdvertisement = (id) => {
-  return AdvertisementModel.remove({_id: id});
+  return AdvertisementModel.findByIdAndRemove(id);
 };
 
+AdvertisementModel.filterByCategory = (category) => {
+  return AdvertisementModel.find({category: { $regex : new RegExp(category, "i") }});
+};
+
+AdvertisementModel.filterByDateRange = (dateFilter) => {
+  return AdvertisementModel.find(dateFilter);
+};
 
 export default AdvertisementModel;

@@ -16,6 +16,9 @@ export default async (app) => {
   // Retrieve all advertisements
   app.get('/advertisements', getAllAdvertisements);
 
+  // Fetch for advertisements that start and/or end within a specified date range
+  app.get('/advertisements/dates', filterByDateRange);
+
   app.route('/advertisements/:id')
     // Fetch a specific advertisement
     .get(getAdvertisement)
@@ -33,10 +36,7 @@ export default async (app) => {
     .delete(deleteAdvertisement);
 
   // Fetch a specific advertisement
-  app.get('/advertisements/category/:categoryName', filterByCategory);
-
-  // Fetch for advertisements that start and/or end within a specified date range
-  app.get('/advertisements/dates/', filterByDateRange);
+  app.get('/advertisements/categories/:category', filterByCategory);
 
 
   app.get('/', function(req, res) {

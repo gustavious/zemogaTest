@@ -14,8 +14,8 @@ export const createAdvertisement = async (req, res) => {
   const advertisement = new Advertisemnt({
     offer_msg,
     offer_graphic_url,
-    start_datetime,
-    end_datetime,
+    start_datetime: new Date(start_datetime).toISOString(),
+    end_datetime: new Date(end_datetime).toISOString(),
     category,
   });
   try {
@@ -38,6 +38,11 @@ export const getAdvertisement = async (req, res) => {
   try {
     logger.info('Fetching advertisement...');
     const advertisement = await Advertisemnt.getAdvertisementById(req.params.id);
+    if (advertisement == null) {
+      res.status(404)
+        .send({error: `Advertisement ID not found: ${req.params.id}`});
+      return;
+    }
     res.status(200)
       .send({
         message: 'Advertisement found',
@@ -45,8 +50,8 @@ export const getAdvertisement = async (req, res) => {
       });
   } catch(err) {
     logger.error('Error in getting advertisement: ', err);
-    res.status(500)
-      .send({error: `Got error during advertisement fetch: ${err}`});
+    res.status(404)
+      .send({error: 'Got error during advertisement fetch: Advertisement ID not found'});
   }
 };
 
@@ -82,9 +87,9 @@ export const updateAdvertisement = async (req, res) => {
 export const deleteAdvertisement = async (req, res) => {
   try{
     const removedAdv = await Advertisemnt.removeAdvertisement(req.params.id);
-    if (removedAdv.n === 0) {
-      res.status(500)
-        .send({error: `Advertisement ID not found: ${req.body.id}`});
+    if (removedAdv == null) {
+      res.status(404)
+        .send({error: `Advertisement ID not found: ${req.params.id}`});
       return;
     }
     logger.info('Deleted Advertisement: ' + removedAdv);
@@ -95,29 +100,69 @@ export const deleteAdvertisement = async (req, res) => {
   }
   catch(err) {
     logger.error('Failed to delete advertisement: ' + err);
-    res.status(500).send({error: `Got error while deleting advertisement :( ${err}`});
+    res.status(404).send({error: 'Got error while deleting advertisement: Advertisement ID not found'});
   }
 };
 
 export const filterByCategory = async (req, res) => {
-  try {
-    await User.getUserById(req.body.user_id);
-  } catch (e) {
+  const {category} = req.params;
+  if (!category) {
     res.status(500)
-      .send({error: `User id not found: ${req.body.user_id}`});
+      .send({error: 'Missing params', required: 'category'});
     return;
   }
   try {
-    logger.info('Fetching user votes...');
-    const votes = Vote.getVotesByUserId(req.params.id);
+    const filteredAdvertisements = await Advertisemnt.filterByCategory(category);
+    if (filteredAdvertisements.length === 0){
+      res.status(200)
+        .send({
+          message: `No Advertisements found for category ${category}`,
+        });
+    }
     res.status(200)
       .send({
-        message: `Votes found for user`,
-        votes
+        message: `Advertisements found for category ${category}`,
+        advertisements: filteredAdvertisements,
       });
-  } catch(err) {
-    logger.error('Error in getting users: ', err);
+  } catch (e) {
+    res.status(404)
+      .send({error: `No advertisements found for category: ${req.params.category}`});
+  }
+};
+
+export const filterByDateRange = async (req, res) => {
+  const {filter_by, initial_date, final_date} = req.query;
+  if (!filter_by || !initial_date || !final_date) {
     res.status(500)
-      .send({error: `Got error during user fetch: ${err}`});
+      .send({error: 'Missing query_string params', required: 'filterBy<START|END|BOTH>, initial_date, final_date'});
+    return;
+  }
+  if (filter_by !== 'START' && filter_by !== 'END' && filter_by !== 'BOTH') {
+    res.status(500)
+      .send({error: 'Wrong value for filter_by', validValues: 'START, END, BOTH'});
+    return;
+  }
+  try {
+    let dateFilter = {};
+    if (filter_by === 'START'){
+      dateFilter = {'start_datetime': {'$gte': initial_date, '$lte': final_date}};
+    } else if (filter_by === 'END'){
+      dateFilter = {'end_datetime': {'$gte': initial_date, '$lte': final_date}};
+    } else {
+      dateFilter = {
+        'start_datetime': {'$gte': initial_date, '$lte': final_date},
+        'end_datetime': {'$gte': initial_date, '$lte': final_date}
+      };
+    }
+    const filteredAdvertisements = await Advertisemnt.filterByDateRange(dateFilter);
+    res.status(200)
+      .send({
+        message: `Advertisements found for range ${initial_date} to ${final_date}`,
+        filteredBy: filter_by,
+        advertisements: filteredAdvertisements,
+      });
+  } catch (e) {
+    res.status(500)
+      .send({error: `Error during filtering: ${e}`});
   }
 };
