@@ -1,39 +1,43 @@
 import {
-  createUser,
-  login,
-  getAllUsers,
-  getUser,
-  updateUser,
-  removeUser,
-  addVote,
-  getAllVotes,
-  getVotesByUser,
+  createAdvertisement,
+  getAllAdvertisements,
+  getAdvertisement,
+  updateAdvertisement,
+  deleteAdvertisement,
+  filterByCategory,
+  filterByDateRange,
 } from "../controllers";
 import path from 'path';
 
 export default async (app) => {
-  // Create a user
-  app.post('/signup', createUser);
-  // Log in a user
-  app.post('/login', login);
-  // Get all stored users
-  app.get('/users', getAllUsers);
 
-  app.route('/users/:id')
-    // Get a specific user
-    .get(getUser)
-    // Update an user
-    .put(updateUser)
-    // Remove an user
-    .delete(removeUser);
+  // Create a new advertisement
+  app.post('/advertisement', createAdvertisement);
+  // Retrieve all advertisements
+  app.get('/advertisements', getAllAdvertisements);
 
-  // Add a new vote
-  app.post('/vote', addVote);
-  // Get all votes
-  app.get('/votes', getAllVotes);
-  // Get the votes that belong to a specific user
-  app.route('/users/:id/votes')
-    .get(getVotesByUser);
+  app.route('/advertisements/:id')
+    // Fetch a specific advertisement
+    .get(getAdvertisement)
+    // Modify an advertisement
+    .put(updateAdvertisement)
+    // Delete an advertisement
+    .delete(deleteAdvertisement);
+
+  app.route('/advertisements/:id')
+  // Fetch a specific advertisement
+    .get(getAdvertisement)
+    // Modify an advertisement
+    .put(updateAdvertisement)
+    // Delete an advertisement
+    .delete(deleteAdvertisement);
+
+  // Fetch a specific advertisement
+  app.get('/advertisements/category/:categoryName', filterByCategory);
+
+  // Fetch for advertisements that start and/or end within a specified date range
+  app.get('/advertisements/dates/', filterByDateRange);
+
 
   app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../UI/index.html'));

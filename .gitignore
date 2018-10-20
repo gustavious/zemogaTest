@@ -1,6 +1,5 @@
 .*-env
 .env*
-.jest-cache-docker/**
 .jest-cache/**
 log/**
 node_modules/**

@@ -1,6 +1,6 @@
 'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.getAllVotes = exports.getVotesByUser = exports.addVote = undefined;var _models = require('../models');
 var _logger = require('../core/logger');var _logger2 = _interopRequireDefault(_logger);
-var _voteModel = require('../models/voteModel');var _voteModel2 = _interopRequireDefault(_voteModel);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _voteModel = require('../models/advertisementModel');var _voteModel2 = _interopRequireDefault(_voteModel);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 
 const addVote = exports.addVote = async (req, res) => {

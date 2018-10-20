@@ -18,23 +18,23 @@ const VoteSchema = _mongoose2.default.Schema({
 
 { collection: 'Vote' });
 
-let VoteModel = _mongoose2.default.model('Vote', VoteSchema);
+let AdvertisementModel = _mongoose2.default.model('Advertisement', VoteSchema);
 
-VoteModel.getAll = () => {
-  return VoteModel.find({});
+AdvertisementModel.getAll = () => {
+  return AdvertisementModel.find({});
 };
 
-VoteModel.getVotesByUserId = user_id => {
-  return VoteModel.find({ user_id });
+AdvertisementModel.getVotesByUserId = user_id => {
+  return AdvertisementModel.find({ user_id });
 };
 
-VoteModel.addVote = user => {
+AdvertisementModel.addVote = user => {
   return user.save();
 };
 
-VoteModel.countBoxVotesByUserId = (user_id, box_id) => {
-  return VoteModel.count({ user_id, box_id });
+AdvertisementModel.countBoxVotesByUserId = (user_id, box_id) => {
+  return AdvertisementModel.count({ user_id, box_id });
 };exports.default =
 
 
-VoteModel;
+AdvertisementModel;

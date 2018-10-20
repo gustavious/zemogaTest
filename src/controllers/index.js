@@ -1,27 +1,20 @@
 import {
-  createUser,
-  login,
-  getAllUsers,
-  getUser,
-  updateUser,
-  removeUser,
-} from './userController';
-
-import {
-  getAllVotes,
-  getVotesByUser,
-  addVote,
-} from './voteController';
+  createAdvertisement,
+  getAllAdvertisements,
+  getAdvertisement,
+  updateAdvertisement,
+  deleteAdvertisement,
+  filterByCategory,
+  filterByDateRange,
+} from './advertisementController';
 
 
 export {
-  createUser,
-  login,
-  getAllUsers,
-  getUser,
-  updateUser,
-  removeUser,
-  getAllVotes,
-  getVotesByUser,
-  addVote,
+  createAdvertisement,
+  getAllAdvertisements,
+  getAdvertisement,
+  updateAdvertisement,
+  deleteAdvertisement,
+  filterByCategory,
+  filterByDateRange,
 }

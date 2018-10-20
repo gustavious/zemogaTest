@@ -1,7 +1,7 @@
 import UserModel from './userModel';
-import VoteModel from './voteModel';
+import AdvertisementModel from './advertisementModel';
 
 export {
   UserModel,
-  VoteModel,
+  AdvertisementModel,
 }

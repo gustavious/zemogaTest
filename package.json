@@ -29,6 +29,7 @@
     "flow-bin": "0.69.0",
     "mocha": "^5.2.0",
     "morgan": "^1.8.2",
+    "mongoose-type-url": "^1.0.4",
     "nodemon": "^1.18.4",
     "request": "latest"
   },
