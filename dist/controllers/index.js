@@ -1,4 +1,4 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.addVote = exports.getVotesByUser = exports.getAllVotes = exports.removeUser = exports.updateUser = exports.getUser = exports.getAllUsers = exports.login = exports.createUser = undefined;var _userController = require('./userController');
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.filterByDateRange = exports.filterByCategory = exports.deleteAdvertisement = exports.updateAdvertisement = exports.getAdvertisement = exports.getAllAdvertisements = exports.createAdvertisement = undefined;var _advertisementController = require('./advertisementController');exports.
 
 
 
@@ -7,20 +7,13 @@
 
 
 
-var _voteController = require('./voteController');exports.
 
 
 
-
-
-
-
-createUser = _userController.createUser;exports.
-login = _userController.login;exports.
-getAllUsers = _userController.getAllUsers;exports.
-getUser = _userController.getUser;exports.
-updateUser = _userController.updateUser;exports.
-removeUser = _userController.removeUser;exports.
-getAllVotes = _voteController.getAllVotes;exports.
-getVotesByUser = _voteController.getVotesByUser;exports.
-addVote = _voteController.addVote;
+createAdvertisement = _advertisementController.createAdvertisement;exports.
+getAllAdvertisements = _advertisementController.getAllAdvertisements;exports.
+getAdvertisement = _advertisementController.getAdvertisement;exports.
+updateAdvertisement = _advertisementController.updateAdvertisement;exports.
+deleteAdvertisement = _advertisementController.deleteAdvertisement;exports.
+filterByCategory = _advertisementController.filterByCategory;exports.
+filterByDateRange = _advertisementController.filterByDateRange;

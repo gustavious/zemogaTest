@@ -7,33 +7,25 @@
 
 
 
-
-
 var _path = require('path');var _path2 = _interopRequireDefault(_path);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}exports.default =
 
 async app => {
-  // Create a user
-  app.post('/signup', _controllers.createUser);
-  // Log in a user
-  app.post('/login', _controllers.login);
-  // Get all stored users
-  app.get('/users', _controllers.getAllUsers);
+  // Create a new advertisement
+  app.post('/advertisement', _controllers.createAdvertisement);
+  // Retrieve all advertisements
+  app.get('/advertisements', _controllers.getAllAdvertisements);
+  // Fetch for advertisements that start and/or end within a specified date range
+  app.get('/advertisements/dates', _controllers.filterByDateRange);
+  // Fetch advertisements that belong to a category
+  app.get('/advertisements/categories/:category', _controllers.filterByCategory);
 
-  app.route('/users/:id')
-  // Get a specific user
-  .get(_controllers.getUser)
-  // Update an user
-  .put(_controllers.updateUser)
-  // Remove an user
-  .delete(_controllers.removeUser);
-
-  // Add a new vote
-  app.post('/vote', _controllers.addVote);
-  // Get all votes
-  app.get('/votes', _controllers.getAllVotes);
-  // Get the votes that belong to a specific user
-  app.route('/users/:id/votes').
-  get(_controllers.getVotesByUser);
+  app.route('/advertisements/:id')
+  // Fetch a specific advertisement
+  .get(_controllers.getAdvertisement)
+  // Modify an advertisement
+  .put(_controllers.updateAdvertisement)
+  // Delete an advertisement
+  .delete(_controllers.deleteAdvertisement);
 
   app.get('/', function (req, res) {
     res.sendFile(_path2.default.join(__dirname, '../UI/index.html'));

@@ -5,7 +5,7 @@ config.logFileDir = _path2.default.join(__dirname, '../../log');
 config.logFileName = 'app.log';
 config.dbHost = process.env.dbHost || 'localhost';
 config.dbPort = process.env.dbPort || '27017';
-config.dbName = process.env.dbName || 'users';
+config.dbName = process.env.dbName || 'advertisements';
 config.serverPort = process.env.serverPort || 3000;exports.default =
 
 config;

@@ -5,12 +5,11 @@ import config from './core/config'
 import morgan from 'morgan'
 import connectToDb from './db/connect'
 import logger from './core/logger'
-import * as autoQuit from 'autoquit'
 
 const server = express(),
   port = config.serverPort;
 logger.stream = {
-  write: function(message, encoding){
+  write: function(message, encoding){ // eslint-disable-line no-unused-vars
     logger.info(message);
   }
 };
@@ -21,7 +20,6 @@ server.use(bodyParser.json());
 server.use(morgan("dev", { "stream": logger.stream }));
 Router(server);
 
-server.autoQuit;
 server.listen(port, () => {
   logger.info(`Server running at http://127.0.0.1:${port}/
       You can see endpoints listed in /`);

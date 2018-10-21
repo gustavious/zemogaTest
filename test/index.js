@@ -2,8 +2,6 @@ import http from 'http';
 import assert from 'assert';
 import request from 'request';
 
-
-
 describe('Example Node Server', () => {
   it('should return 200', done => {
     http.get('http://127.0.0.1:3000', res => {
@@ -13,33 +11,25 @@ describe('Example Node Server', () => {
   });
 });
 
-describe('Example of an user registration', () => {
+describe('Example of an advertisement creation', () => {
   it('should return 201', done => {
-    request('http://127.0.0.1:3000/users', {
-      'username': 'Sample',
-      password: '123456',
-      marriage_status: 'MARRIED',
-      age: '21' }, (err, res, body) => {
-      assert.equal(401, res.statusCode);
-      done();
-    })
-    ;
-  });
-});
-
-describe('Example to query all users without token', () => {
-  it('should return 401', done => {
-    http.get('http://127.0.0.1:3000/users', res => {
-      assert.equal(401, res.statusCode);
+    request.post('http://127.0.0.1:3000/advertisement', {form:{
+      offer_msg: 'Sample offer message',
+      offer_graphic_url: 'http://www.zemoga.com',
+      start_datetime: '2011-10-20T20:28:17Z',
+      end_datetime: '2015-10-20T20:28:17Z',
+      category: 'CLOTHES'}}, (err, res, body) => {
+      console.log(res.body);
+      assert.equal(201, res.statusCode);
       done();
     });
   });
 });
 
-describe('Example to query all votes without token', () => {
-  it('should return 401', done => {
-    http.get('http://127.0.0.1:3000/votes', res => {
-      assert.equal(401, res.statusCode);
+describe('Example to query all the advertisements', () => {
+  it('should return 200', done => {
+    http.get('http://127.0.0.1:3000/advertisements', res => {
+      assert.equal(200, res.statusCode);
       done();
     });
   });

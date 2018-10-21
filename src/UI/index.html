@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Zemoga NodeJS</title>
+        <title>NodeJS Example</title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
         <style>
             body { padding-top:50px; }
@@ -14,18 +14,16 @@
                 <h1>Welcome!</h1>
                 <h2>Available Endpoints Are:</h2>
                 <h2>POST</h2>
-                <p>Registration: /signup</p>
-                <p>Log In: /login</p>
-                <p>Vote: /vote</p>
+                <p>Create new advertisement: /advertisement</p>
                 <h2>GET</h2>
-                <p>Get all users: /users</p>
-                <p>Get a specific user: /users/:id</p>
-                <p>Get a specific user votes: /users/:id/votes</p>
-                <p>Get all votes: /votes</p>
+                <p>Retrieve all advertisement: /advertisements</p>
+                <p>Fetch for advertisements that start and/or end within a specified date range: /advertisements/dates</p>
+                <p>Fetch advertisements that belong to a category: /advertisements/categories/:category</p>
+                <p>Fetch a specific advertisement: /advertisements/:id</p>
                 <h2>PUT</h2>
-                <p>Update an user: /users/:id</p>
+                <p>Modify an advertisement: /advertisements/:id</p>
                 <h2>DELETE</h2>
-                <p>Remove an user: /users/:id</p>
+                <p>Delete an advertisement: /advertisements/:id</p>
             </div>
         </div>
     </body>

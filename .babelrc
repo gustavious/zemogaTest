@@ -8,10 +8,7 @@
   ],
   "retainLines": true,
   "plugins": [
-    "syntax-class-properties",
-    "syntax-flow",
     "transform-class-properties",
-    "transform-flow-comments",
     "transform-object-rest-spread",
     ["transform-runtime",{"polyfill":false,"regenerator":true}],
   ],

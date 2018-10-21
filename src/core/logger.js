@@ -1,5 +1,5 @@
 import * as winston from 'winston'
-import * as rotate from 'winston-daily-rotate-file'
+import * as rotate from 'winston-daily-rotate-file' // eslint-disable-line no-unused-vars
 import config from '../core/config'
 import * as fs from 'fs';
 
